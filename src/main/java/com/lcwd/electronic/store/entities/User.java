@@ -1,7 +1,12 @@
 package com.lcwd.electronic.store.entities;
 
-import jakarta.persistence.*;
+//import jakarta.persistence.*;
 import lombok.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 //lombok=> for creating all get and setter and constructor - below five annotation of lombok
 @Getter
