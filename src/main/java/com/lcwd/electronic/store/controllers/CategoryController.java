@@ -29,7 +29,7 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @Value("${user.profile.imageCategories.path}")
+    @Value("${categories.profile.image.path}")
     private String categoryImageUploadPath;
 
     @Autowired

@@ -8,6 +8,8 @@ import com.lcwd.electronic.store.helper.Helper;
 import com.lcwd.electronic.store.repositories.ProductRepository;
 import com.lcwd.electronic.store.services.ProductService;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +23,8 @@ import java.util.UUID;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+
+    Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
     @Autowired
     private ProductRepository productRepository;
@@ -37,8 +41,8 @@ public class ProductServiceImpl implements ProductService {
         //added Date
         product.setAddedDate(new Date());
 
-        Product savedProduct = productRepository.save(product);
-        return mapper.map(savedProduct, ProductDto.class);
+        Product saveProduct = productRepository.save(product);
+        return mapper.map(saveProduct, ProductDto.class);
     }
 
     @Override
@@ -52,6 +56,7 @@ public class ProductServiceImpl implements ProductService {
         //bool value
         product.setLive(productDto.isLive());
         product.setStock(productDto.isStock());
+        product.setProductImageName(productDto.getProdctImageName());
 
         //save the entity
         Product updatedProduct = productRepository.save(product);
