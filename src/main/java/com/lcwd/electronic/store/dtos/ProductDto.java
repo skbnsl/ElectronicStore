@@ -1,5 +1,6 @@
 package com.lcwd.electronic.store.dtos;
 
+import com.lcwd.electronic.store.entities.Category;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -26,4 +27,6 @@ public class ProductDto {
     private boolean stock;
 
     private String prodctImageName;
+
+    private CategoryDto category;
 }
