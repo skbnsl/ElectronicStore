@@ -50,8 +50,8 @@ public class CategoryController {
     //update
     @PutMapping("/{categoryId}")
     public ResponseEntity<CategoryDto> updateCategory(@RequestBody CategoryDto categoryDto, @PathVariable String categoryId){
-         CategoryDto updatedCategory = categoryService.update(categoryDto, categoryId);
-         return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
+        CategoryDto updatedCategory = categoryService.update(categoryDto, categoryId);
+        return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
     }
 
 
@@ -59,8 +59,8 @@ public class CategoryController {
     @DeleteMapping("/{categoryId}")
     public ResponseEntity<ApiResponseMessage> deleteCategory(@PathVariable String categoryId){
         categoryService.delete(categoryId);
-         ApiResponseMessage responseMessage = ApiResponseMessage.builder().message("Category is deleted successfully!!").status(HttpStatus.OK).success(true).build();
-         return new ResponseEntity<>(responseMessage,HttpStatus.OK);
+        ApiResponseMessage responseMessage = ApiResponseMessage.builder().message("Category is deleted successfully!!").status(HttpStatus.OK).success(true).build();
+        return new ResponseEntity<>(responseMessage,HttpStatus.OK);
     }
 
     //getAll
@@ -79,8 +79,8 @@ public class CategoryController {
     //single
     @GetMapping("/{categoryId}")
     public ResponseEntity<CategoryDto> getSingle (@PathVariable String categoryId){
-         CategoryDto categoryDto = categoryService.get(categoryId);
-         return ResponseEntity.ok(categoryDto);
+        CategoryDto categoryDto = categoryService.get(categoryId);
+        return ResponseEntity.ok(categoryDto);
     }
 
     //upload user Image
