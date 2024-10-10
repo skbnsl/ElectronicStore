@@ -30,7 +30,35 @@ public class CartController {
             @PathVariable String userId
     ){
         cartService.removeItemFromCart(userId, itemId);
-        return null;
+        ApiResponseMessage response = ApiResponseMessage.builder()
+                .message("item is removed!!")
+                .success(true)
+                .status(HttpStatus.OK)
+                .build();
+
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
+    //clear cart
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<ApiResponseMessage> clearCart(
+            @PathVariable String userId
+    ){
+        cartService.clearCart(userId);
+        ApiResponseMessage response = ApiResponseMessage.builder()
+                .message("Now! Cart is blank!!")
+                .success(true)
+                .status(HttpStatus.OK)
+                .build();
+
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
+    //get cart
+    @GetMapping("/{userId}")
+    public ResponseEntity<CartDto> getCart(@PathVariable String userId){
+        CartDto cartDto = cartService.getCartByUser(userId);
+        return new ResponseEntity<>(cartDto, HttpStatus.OK);
     }
 
 

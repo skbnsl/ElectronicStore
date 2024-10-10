@@ -34,6 +34,7 @@ public class CartServiceImpl implements CartService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
     private CartRepository cartRepository;
 
     @Autowired
@@ -75,7 +76,7 @@ public class CartServiceImpl implements CartService {
             if(item.getProduct().getProductId().equals(productId)){
                 //item already present in cart
                 item.setQuantity(quantity);
-                item.setTotalPrice(quantity*product.getPrice());
+                item.setTotalPrice(quantity*product.getDiscountedPrice());
                 updated.set(true);
 
             }
@@ -88,7 +89,7 @@ public class CartServiceImpl implements CartService {
         if(!updated.get()){
             CartItem cartItem = CartItem.builder()
                     .quantity(quantity)
-                    .totalPrice(quantity * product.getPrice())
+                    .totalPrice(quantity * product.getDiscountedPrice())
                     .cart(cart)
                     .product(product)
                     .build();
@@ -119,8 +120,9 @@ public class CartServiceImpl implements CartService {
 
         Cart cart = cartRepository.findByUser(user).orElseThrow(()-> new ResourceNotFoundException("cart not found with given user"));
         cart.getItems().clear();
+        System.out.println(cart.getItems());
 
-        cartRepository.save(cart);
+        cartRepository.delete(cart);
     }
 
     @Override
