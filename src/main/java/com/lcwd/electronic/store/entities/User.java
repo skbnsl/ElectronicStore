@@ -3,10 +3,9 @@ package com.lcwd.electronic.store.entities;
 //import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 //lombok=> for creating all get and setter and constructor - below five annotation of lombok
 @Getter
@@ -40,5 +39,6 @@ public class User {
         @Column(name = "user_image_name")
         private String imageName;
 
-
+        @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+        private List<Order> orders = new ArrayList<>();
 }
