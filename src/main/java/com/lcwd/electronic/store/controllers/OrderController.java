@@ -4,7 +4,9 @@ import com.lcwd.electronic.store.dtos.ApiResponseMessage;
 import com.lcwd.electronic.store.dtos.CreateOrderRequest;
 import com.lcwd.electronic.store.dtos.OrderDto;
 import com.lcwd.electronic.store.dtos.PageableResponse;
+import com.lcwd.electronic.store.entities.Order;
 import com.lcwd.electronic.store.services.OrderService;
+import com.lcwd.electronic.store.services.impl.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,6 +54,12 @@ public class OrderController {
     ) {
         PageableResponse<OrderDto> orders = orderService.getOrders(pageNumber, pageSize, sortBy, sortDir);
         return new ResponseEntity<>(orders, HttpStatus.OK);
+    }
+
+    @PutMapping("/update/{orderId}")
+    public ResponseEntity<OrderDto> updateOrder(@PathVariable String orderId, @RequestBody CreateOrderRequest request){
+        OrderDto orderDto = orderService.updateOrder(request, orderId);
+        return new ResponseEntity<>(orderDto,HttpStatus.OK);
     }
 
 }

@@ -20,6 +20,9 @@ public interface OrderService {
     //get orders
     PageableResponse<OrderDto> getOrders(int pageNumber, int pageSize, String sortBy, String sortDir);
 
+
+    //update order payment status ->
+    OrderDto updateOrder(CreateOrderRequest request, String orderId);
     //order apis related to order
 
 }

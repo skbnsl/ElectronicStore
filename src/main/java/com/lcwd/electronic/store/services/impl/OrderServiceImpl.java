@@ -121,4 +121,20 @@ public class OrderServiceImpl implements OrderService {
 
         return Helper.getPageableResponse(page, OrderDto.class);
     }
+
+    @Override
+    public OrderDto updateOrder(CreateOrderRequest request, String orderId) {
+        String orderStatus = request.getOrderStatus();
+        String paymentStatus = request.getPaymentStatus();
+
+         Order order = orderRepository.findById(orderId).orElseThrow(()->new ResourceNotFoundException("order not found"));
+
+         order.setOrderStatus(orderStatus);
+         order.setPaymentStatus(paymentStatus);
+
+         order.setOrderedDate(new Date());
+
+         Order updatedOrder = orderRepository.save(order);
+         return modelMapper.map(updatedOrder,OrderDto.class);
+    }
 }
