@@ -3,6 +3,7 @@ package com.lcwd.electronic.store.controllers;
 import com.lcwd.electronic.store.dtos.*;
 import com.lcwd.electronic.store.services.FileService;
 import com.lcwd.electronic.store.services.ProductService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -12,7 +13,6 @@ import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 

@@ -3,13 +3,11 @@ package com.lcwd.electronic.store.dtos;
 /*import jakarta.persistence.Column;
 import jakarta.persistence.Id;*/
 import com.lcwd.electronic.store.validate.ImageNameValid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.aspectj.bridge.IMessage;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 @Getter
 @Setter

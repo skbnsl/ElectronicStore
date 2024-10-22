@@ -4,8 +4,6 @@ import com.lcwd.electronic.store.entities.Category;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
 import java.util.Date;
 
 @AllArgsConstructor
