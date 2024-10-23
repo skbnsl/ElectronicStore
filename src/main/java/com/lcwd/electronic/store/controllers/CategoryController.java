@@ -5,8 +5,6 @@ import com.lcwd.electronic.store.entities.Category;
 import com.lcwd.electronic.store.services.CategoryService;
 import com.lcwd.electronic.store.services.FileService;
 import com.lcwd.electronic.store.services.ProductService;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +16,8 @@ import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.io.InputStream;
 
