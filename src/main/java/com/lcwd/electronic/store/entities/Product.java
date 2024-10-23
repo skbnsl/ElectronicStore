@@ -30,7 +30,7 @@ public class Product {
     private String productImageName;
 
     //for mapping
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 }
