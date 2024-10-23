@@ -1,7 +1,7 @@
 package com.lcwd.electronic.store.entities;
 
 import lombok.*;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import javax.persistence.*;
 
 

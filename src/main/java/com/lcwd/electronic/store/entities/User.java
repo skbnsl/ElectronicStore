@@ -1,41 +1,43 @@
 package com.lcwd.electronic.store.entities;
 
-//import jakarta.persistence.*;
 import lombok.*;
+
+import org.apache.catalina.authenticator.jaspic.PersistentProviderRegistrations;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.security.Provider;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-//lombok=> for creating all get and setter and constructor - below five annotation of lombok
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User implements UserDetails {
 
+        //ADMIN
+        //NORMAL
+
         @Id
-        //@GeneratedValue(strategy = GenerationType.AUTO)
+        //@GeneratedValue(strategy = GenerationType.IDENTITY)
         private String userId;
 
         @Column(name = "user_name")
         private String name;
 
-        @Column(name = "user_email",unique = true)
+        @Column(name = "user_email", unique = true)
         private String email;
 
-        @Getter
-        @Column(name = "user_password",length = 1000)
+        @Column(name = "user_password", length = 500)
         private String password;
 
         private String gender;
@@ -49,20 +51,35 @@ public class User implements UserDetails {
         @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
         private List<Order> orders = new ArrayList<>();
 
-        @OneToMany(cascade = CascadeType.ALL)
+        @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
         private List<Role> roles = new ArrayList<>();
 
-        //important for roles
+
+
+        private Provider provider;
+
+
+        // important for roles.
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
                 Set<SimpleGrantedAuthority> authorities = roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toSet());
                 return authorities;
         }
 
+
+        //important
         @Override
         public String getUsername() {
                 return this.getEmail();
         }
+
+        //important
+        // lombok
+        @Override
+        public String getPassword() {
+                return password;
+        }
+
 
         @Override
         public boolean isAccountNonExpired() {
