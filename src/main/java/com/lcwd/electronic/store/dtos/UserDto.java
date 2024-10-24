@@ -2,12 +2,9 @@ package com.lcwd.electronic.store.dtos;
 
 /*import jakarta.persistence.Column;
 import jakarta.persistence.Id;*/
-import com.lcwd.electronic.store.entities.Role;
 import com.lcwd.electronic.store.validate.ImageNameValid;
 import lombok.*;
-import org.aspectj.bridge.IMessage;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -42,8 +39,6 @@ public class UserDto {
 
     @ImageNameValid
     private String imageName;
-
-    private List<RoleDto> roles;
 
     //pattern and custom validator
 }

@@ -1,6 +1,6 @@
-package com.lcwd.electronic.store.services;
+package com.lcwd.electronic.store.services.impl;
 
-import com.lcwd.electronic.store.exceptions.ResourceNotFoundException;
+import com.lcwd.electronic.store.entities.User;
 import com.lcwd.electronic.store.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +16,9 @@ public class CustomUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByEmail(username).orElseThrow(()->new ResourceNotFoundException("user not found with given username "+username));
+
+        User user = userRepository.findByEmail(username).orElseThrow(()->new UsernameNotFoundException("user not found with email"));
+        return user;
+
     }
 }

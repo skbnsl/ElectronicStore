@@ -1,55 +1,72 @@
 package com.lcwd.electronic.store.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableWebSecurity(debug = true)
-@EnableMethodSecurity(prePostEnabled = true)
-public class SecurityConfig {
+public class SecurityConfig  {
 
-    //securityFilterChains beans
+    @Autowired
+    private UserDetailsService userDetailsService;
+
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity security) throws Exception {
-        //configurations
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//            http.authorizeRequests()
+//                    .anyRequest().authenticated().and()
+//                    .formLogin()
+//                    .loginPage("login.html")
+//                    .loginProcessingUrl("/process-url")
+//                    .defaultSuccessUrl("/dashboard")
+//                    .failureUrl("error")
+//                    .and()
+//                    .logout()
+//                    .logoutUrl("/do-logout");
+                //this code is for basic authentication using->  httpBasic()
+                    http
+                    .csrf()
+                    .disable()
+                    .cors()
+                    .disable()
+                    .authorizeRequests()
+                    .anyRequest()
+                    .authenticated()
+                    .and()
+                    .httpBasic();
 
-        //disbaling cors
-        security.cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.disable());
-
-        //disbaling csrf
-        security.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable());
-
-        /*url-public,private,protected ** admin/user */
-        security.authorizeHttpRequests(request->{
-
-             request.antMatchers(HttpMethod.DELETE,"/users/**").hasRole("ADMIN")
-                     .antMatchers(HttpMethod.PUT,"/users/**").hasAnyRole("ADMIN","NORMAL")
-                     .antMatchers(HttpMethod.GET,"/products/**").permitAll()
-                     .antMatchers("/products/**").hasRole("ADMIN")
-                     .antMatchers(HttpMethod.GET,"/users/**").permitAll()
-                     .antMatchers(HttpMethod.GET,"/categories/**").permitAll()
-                     .antMatchers("/categories/**").hasRole("ADMIN");
-
-        });
-
-        //security type
-        security.httpBasic(Customizer.withDefaults());
-        return security.build();
+            return http.build();
     }
 
-//password encoder
-@Bean
-public PasswordEncoder passwordEncoder(){
-    return new BCryptPasswordEncoder();
-}
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider(){
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setUserDetailsService(this.userDetailsService);
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        return daoAuthenticationProvider;
+    }
+
+    /*@Bean
+    public UserDetailsService userDetailsService(){
+        //create user
+        //InMemoryUserDetailsManager is implementation class of UserDetails
+
+       // UserDetails normal = User.builder().username("sagar").password(passwordEncoder().encode("123")).roles("NORMAL").build();
+
+        //UserDetails admin = User.builder().username("naresh").password(passwordEncoder().encode("123")).roles("ADMIN").build();
+
+
+        // return new InMemoryUserDetailsManager(normal,admin);
+    }*/
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 }

@@ -12,21 +12,16 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
 @Entity
 @Table(name = "cart")
 public class Cart {
 
     @Id
     private String cartId;
-
     private Date createdAt;
-
     @OneToOne
     private User user;
-
     //mapping cart-items
-    @OneToMany(mappedBy="cart", cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<CartItem> items = new ArrayList<>();
-
 }
