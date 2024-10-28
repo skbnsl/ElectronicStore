@@ -3,9 +3,11 @@ package com.lcwd.electronic.store.services.impl;
 import com.lcwd.electronic.store.dtos.ApiResponseMessage;
 import com.lcwd.electronic.store.dtos.PageableResponse;
 import com.lcwd.electronic.store.dtos.UserDto;
+import com.lcwd.electronic.store.entities.Role;
 import com.lcwd.electronic.store.entities.User;
 import com.lcwd.electronic.store.exceptions.ResourceNotFoundException;
 import com.lcwd.electronic.store.helper.Helper;
+import com.lcwd.electronic.store.repositories.RoleRepository;
 import com.lcwd.electronic.store.repositories.UserRepository;
 import com.lcwd.electronic.store.services.UserService;
 import org.modelmapper.ModelMapper;
@@ -43,6 +45,13 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Value("${normal.role.id}")
+    private String normalRoleId;
+
+    @Autowired
+    private RoleRepository roleRepository;
+
     private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
 
@@ -54,6 +63,11 @@ public class UserServiceImpl implements UserService {
         userDto.setUserId(userId);
         // dto->entity
         User user = dtoToEntity(userDto);
+
+        //fetch role of normal and set it to user
+        Role role = roleRepository.findById(normalRoleId).get();
+        user.getRoles().add(role);
+
         User savedUser = userRepository.save(user);
         //encoding password
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
